@@ -49,7 +49,8 @@ sub title
 {
 	my ($self, $input) = @_;
 	utf8::upgrade($input);
-	return shift split(/[\r\n]+/, $input);
+	my @lines = split(/[\r\n]+/, $input);
+	return shift(@lines);
 }
 
 =item $aryref = Bsdprojects::Search::Filter::TextPlain->refs($input, $baseurl);
