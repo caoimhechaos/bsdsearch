@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD xhtml 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+[% IF str; %]
+  <title>BSD projects search: [% str %]</title>
+[% ELSE; %]
+  <title>BSD projects search</title>
+[% END; %]
+  <style type="text/css">
+    html, body {
+	margin-left: 0px;
+	margin-right: 0px;
+    }
+
+    div.content {
+	margin-left: auto;
+	margin-right: auto;
+	width: 400px;
+    }
+
+    div.searchInputPanel {
+	width: 100%;
+	border-color: #704040;
+	border-width: 1px;
+	border-style: solid;
+	padding: 3px;
+    }
+
+    div.searchInputPanel input {
+	width: 394px;
+    }
+
+    span.resulturl {
+	color: #A04040;
+	font-weight: 500;
+    }
+
+    div.metainfo {
+	font-size: 8pt;
+	text-align: right;
+	padding-left: 8px;
+	padding-right: 8px;
+	margin-top: 10px;
+	margin-bottom: 5px;
+	margin-left: 0px;
+	margin-right: 0px;
+	border-color: #A04040;
+	border-top-width: 2px;
+	border-bottom-width: 1px;
+	border-left-width: 0px;
+	border-right-width: 0px;
+	border-style: solid;
+	background-color: #E0B0A0;
+    }
+
+    div.pager {
+	font-size: 8pt;
+	text-align: center;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-left: 0px;
+	margin-right: 0px;
+	border-color: #A04040;
+	border-top-width: 1px;
+	border-bottom-width: 2px;
+	border-left-width: 0px;
+	border-right-width: 0px;
+	border-style: solid;
+	background-color: #E0B0A0;
+    }
+
+    div.pager a {
+	color: #803030;
+    }
+
+    p {
+	font-size: 10pt;
+    }
+
+    p a {
+	font-size: 12pt;
+    }
+
+    span.resulttext {
+	font-size: 11pt;
+    }
+
+    div.resultset {
+	margin: 5px;
+    }
+
+    div.stats {
+	text-align: center;
+	font-size: 8pt;
+    }
+
+    img {
+	margin-bottom: 15px;
+    }
+  </style>
+ </head>
+ <body>
+  <div class="content">
+[% IF NOT str; %]
+   <img src="/images/bsdprojects-search-logo-small.png"
+	alt="BSD projects search engine" title="BSD projects search engine"/>
+[% END; %]
+   <form action="/search.cgi" method="get">
+    <div class="searchInputPanel">
+     <input name="q" type="text" value="[% str %]"/>
+    </div>
+    <input name="btnS" type="submit" value="Search"/>
+   </form>
+  </div>
+[% IF str; %]
+  <div class="metainfo">
+   Results <i>[% page * 10 + 1 %]</i> to <i>[% ((page + 1) * 10 > nresults ?
+	nresults : (page + 1) * 10 - 1) %]</i> of <i>[% nresults %]</i> for
+   <b>[% str %]</b>. Search took [% time %] seconds (Visualization:
+    [% showtime %] seconds).
+  </div>
+  <div class="resultset">
+[% IF nresults == 0; %]
+   <p>
+    No results found for <i>[% str %]</i>.
+   </p>
+[% END; %]
+[% FOREACH result IN results -%]
+   <p>
+    <a href="[% result.url %]">[% result.title %]</a><br/>
+    <span class="resulttext">[% result.text %]</span><br/>
+    <span class="resulturl">[% result.showurl %]</span>
+   </p>
+[% END -%]
+  </div>
+  <div class="pager">
+   Result pages:
+[% IF page > 10; %]
+   ...
+[% END; %]
+[% FOREACH opage IN pages -%]
+[% IF opage == page; %]
+   <b>
+[% END; %]
+   <a href="/search.cgi?q=[% encquery %]&p=[% opage %]">[% opage + 1 %]</a>
+[% IF opage == page; %]
+   </b>
+[% END; %]
+[% END -%]
+[% IF hasmore; %]
+   ...
+[% END; %]
+  </div>
+  <div class="content">
+   <form action="/search.cgi" method="get">
+    <div class="searchInputPanel">
+     <input name="q" type="text" value="[% str %]"/>
+    </div>
+    <input class="btnS" name="btnS" type="submit" value="Search"/>
+   </form>
+  </div>
+[% END; %]
+[% IF nsites; %]
+  <div class="stats">
+   BSD projects search engine - searching [% nsites %] web sites.
+  </div>
+[% END; %]
+ </body>
+</html>
