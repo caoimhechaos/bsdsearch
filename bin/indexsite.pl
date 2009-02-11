@@ -37,6 +37,7 @@ use Time::HiRes qw(time);
 use List::MoreUtils qw(uniq apply);
 use strict;
 use utf8;
+use URI;
 
 use Bsdprojects::Search::Schema;
 
@@ -142,7 +143,10 @@ sub index_site
 
 	foreach my $link (@{$links})
 	{
-		$link =~ s/#.*$//g;
+		$link = URI->new($link)->canonical;
+		$link->fragment(undef);
+		$link = $link->as_string;
+
 		unless ($link =~ /^mailto:/ || $link =~ /^irc:/)
 		{
 			my $encurl = $url;
