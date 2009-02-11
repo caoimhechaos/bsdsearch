@@ -36,6 +36,7 @@ use CGI::Carp 'fatalsToBrowser';
 use DBI;
 use HTML::Entities qw(encode_entities_numeric);
 use Bsdprojects::Search::Schema;
+use Bsdprojects::Search::UTF8;
 use Template;
 use Time::HiRes qw(time);
 
@@ -49,7 +50,7 @@ my $tt = new Template({
 	POST_CHOMP =>	1,
 	EVAL_PERL =>	1
 });
-my $query = param('q');
+my $query = defined(param('q')) ? u8ify(param('q')) : '';
 my $encquery = $query;
 my $q = escapeHTML($query);
 my $schema = Bsdprojects::Search::Schema->connect(
