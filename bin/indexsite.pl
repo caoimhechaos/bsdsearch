@@ -148,7 +148,7 @@ sub index_site
 			my $encurl = $url;
 			my @urlparts = split("/", $url);
 			my $loop = 0;
-			$encurl =~ s/(\W)/sprintf("%%%02X",ord($1))/eg;
+			$encurl =~ s/([^\w\-\+\.])/sprintf("%%%02X",ord($1))/eg;
 
 			foreach my $part (uniq @urlparts)
 			{
