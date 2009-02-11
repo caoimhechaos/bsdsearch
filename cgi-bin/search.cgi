@@ -62,7 +62,7 @@ my $offset = defined(param('p')) ? int(param('p')) : 0;
 my $npages = 0;
 my $nresults = 0;
 my @pages;
-my $time;
+my $time = 0;
 my $showtime = 0;
 my $nsites;
 
