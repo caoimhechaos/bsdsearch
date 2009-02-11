@@ -32,6 +32,7 @@
 
 use lib qw(../lib);
 use Bsdprojects::Search::Filter;
+use Bsdprojects::Search::UTF8;
 use LWP::UserAgent;
 use Time::HiRes qw(time);
 use List::MoreUtils qw(uniq apply);
@@ -121,8 +122,7 @@ sub index_site
 		return 0;
 	}
 
-	$cnt = $res->content;
-	utf8::upgrade($cnt);
+	$cnt = u8ify($res->content);
 
 	eval {
 		$obj->abstract($ref->parse($cnt));
