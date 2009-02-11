@@ -23,6 +23,7 @@ use utf8;
 our $VERSION = 0.1;
 
 use base qw(Bsdprojects::Search::Filter);
+use Bsdprojects::Search::UTF8;
 use HTML::Parser;
 
 =head1 FUNCTIONS
@@ -36,7 +37,7 @@ use HTML::Parser;
 sub parse
 {
 	my ($self, $input) = @_;
-	utf8::upgrade($input);
+	$input = u8ify($input);
 	$input =~ s/\s+/ /g;
 	return $input;
 }
@@ -48,7 +49,7 @@ sub parse
 sub title
 {
 	my ($self, $input) = @_;
-	utf8::upgrade($input);
+	$input = u8ify($input);
 	my @lines = split(/[\r\n]+/, $input);
 	return shift(@lines);
 }
@@ -61,6 +62,7 @@ sub refs
 {
 	my ($self, $input, $basehref) = @_;
 	my @refs;
+	$input = u8ify($input);
 	$input =~ s/(?:^|\s|\<|\<URL:)((?:https?|ftp):\/\/[\w\.\+\-\/]+)(?:\s|\>|$)/push(@refs,$1)/eg;
 	return \@refs;
 }

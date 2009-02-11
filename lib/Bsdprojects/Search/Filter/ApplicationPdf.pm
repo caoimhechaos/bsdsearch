@@ -44,6 +44,7 @@ sub parse
 	my $progp;
 
 	$_txtp->close();
+	$pdfp->binmode();
 	$pdfp->write($input, length($input));
 	$pdfp->close();
 
@@ -66,6 +67,7 @@ sub parse
 
 	$txtp = IO::File->new($_txtp->filename, 'r') or
 		die('Unable to open temporary file ' . $_txtp->filename . $!);
+	$txtp->binmode();
 	until ($txtp->eof())
 	{
 		my $buf = '';
