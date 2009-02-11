@@ -253,6 +253,7 @@ while (1)
 			{ -not_like =>'https://secure.homedepot.com:443/%'},
 			{ -not_like =>'%/cache/cache/cache/%'} ],
 	}, {
+		order_by =>	[qw(id)],
 		rows =>	1
 	})->next;
 	unless (defined($site))
