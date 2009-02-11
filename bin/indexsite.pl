@@ -186,27 +186,25 @@ sub index_site
 	$obj->spamminess(int(scalar(@{$links}) * 1000 / scalar(@sitewords)))
 		if (scalar(@sitewords));
 
-	@uniquewords = uniq(apply { $_ = lc($_) } @sitewords);
+	@uniquewords = uniq(apply { $_ = lc($_) } grep { length($_) > 2 }
+		@sitewords);
 	printf("Saved %.01f%% spotting duplicates.\n",
 		(scalar(@sitewords) > 0 ?
 		 ((scalar(@sitewords) - scalar(@uniquewords)) * 100) /
 		 scalar(@sitewords) : 0));
 	foreach my $word (@uniquewords)
 	{
-		if (length($word) > 2)
-		{
-			my $dbword = $schema->resultset('Keyword')->
-				find_or_create({word =>	lc($word)});
-			my $count = scalar(grep { lc($_) eq lc($word) } @sitewords);
-			$schema->resultset('Siteword')->
-				update_or_create({
-				id_keyword =>	$dbword->id,
-				id_site =>	$obj->id,
-				count =>	$count,
-				ratio =>	int(($count * 100000) /
-					scalar(@sitewords))
-			});
-		}
+		my $dbword = $schema->resultset('Keyword')->
+			find_or_create({word =>	lc($word)});
+		my $count = scalar(grep { lc($_) eq lc($word) } @sitewords);
+		$schema->resultset('Siteword')->
+			update_or_create({
+			id_keyword =>	$dbword->id,
+			id_site =>	$obj->id,
+			count =>	$count,
+			ratio =>	int(($count * 100000) /
+				scalar(@sitewords))
+		});
 	}
 
 	$sites = $schema->resultset('Linksto')->search({
