@@ -145,6 +145,7 @@ sub index_site
 	{
 		$link = URI->new($link)->canonical;
 		$link->fragment(undef);
+		$link->path('/') unless (defined($link->path) && length($link->path));
 		$link = $link->as_string;
 
 		unless ($link =~ /^mailto:/ || $link =~ /^irc:/)
