@@ -175,7 +175,7 @@ sub index_site
 			}
 			else
 			{
-				print($url . ' looks like an URL loop, ' .
+				print($link . ' looks like an URL loop, ' .
 					"skipping.\n");
 			}
 		}
