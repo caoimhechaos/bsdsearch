@@ -30,7 +30,7 @@
 # OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-use lib qw(/usr/home/tonnerre/src/search/lib);
+use lib qw(/home/tonnerre/src/search/lib);
 use CGI qw/:standard/;
 use CGI::Carp 'fatalsToBrowser';
 use DBI;
