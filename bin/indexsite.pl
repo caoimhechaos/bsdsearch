@@ -309,7 +309,7 @@ while (1)
 				{ -not_like =>'%/cache/cache/cache/%'} ],
 			failed =>	0
 		}, {
-			order_by =>	[qw(abstract)],
+			order_by =>	[qw(lastindex)],
 			rows =>	1
 		})->next;
 	}
