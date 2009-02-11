@@ -23,6 +23,7 @@ use utf8;
 our $VERSION = 0.1;
 
 use base qw(Bsdprojects::Search::Filter);
+use Bsdprojects::Search::UTF8;
 use HTML::Parser;
 
 =head1 FUNCTIONS
@@ -38,7 +39,6 @@ sub parse
 	my ($self, $input) = @_;
 	my $output = '';
 	my %inside;
-	utf8::upgrade($input);
 	my $p = new HTML::Parser(api_version => 3,
 		handlers => [
 			start => [ sub {
@@ -56,7 +56,7 @@ sub parse
 			}, "dtext" ]
 		],
 		marked_sections => 1);
-	$p->parse($input);
+	$p->parse(u8ify($input));
 	$output =~ s/\s+/ /g;
 	return $output;
 }
@@ -69,7 +69,6 @@ sub title
 {
 	my ($self, $input) = @_;
 	my $output = '';
-	utf8::upgrade($input);
 	my $p = new HTML::Parser(api_version => 3,
 		start_h => [ sub {
 			my $self = shift;
@@ -77,7 +76,7 @@ sub title
 			$self->handler(end => "eof", "self");
 		}, "self"],
 		report_tags =>	['title']);
-	$p->parse($input);
+	$p->parse(u8ify($input));
 	return $output;
 }
 
@@ -109,7 +108,7 @@ sub refs
 			}
 		}, "tagname,attr"],
 		report_tags =>	['a', 'frame', 'iframe']);
-	$p->parse($input);
+	$p->parse(u8ify($input));
 	return \@refs;
 }
 
