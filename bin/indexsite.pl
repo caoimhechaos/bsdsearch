@@ -157,7 +157,7 @@ sub index_site
 			}
 
 			$loop = 1 if ($link =~ /=$encurl/ ||
-				$link =~ /%2525252525/);
+				$link =~ /%252525/);
 
 			# Avoid loops
 			unless ($loop)
