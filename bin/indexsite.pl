@@ -34,6 +34,7 @@ use lib qw(../lib);
 use Bsdprojects::Search::Filter;
 use Bsdprojects::Search::UTF8;
 use LWP::UserAgent;
+use HTTP::Cookies;
 use Time::HiRes qw(time);
 use List::MoreUtils qw(uniq apply);
 use strict;
@@ -63,9 +64,6 @@ sub index_site
 	my $start;
 
 	$url =~ s/#.*$//g;
-
-	$ua->timeout(10);
-	$ua->cookie_jar({});
 
 	$start = time();
 	$req = new HTTP::Request(HEAD => $url);
@@ -230,6 +228,40 @@ sub index_site
 }
 
 my $ua = new LWP::UserAgent;
+my $cj = HTTP::Cookies->new(
+	file =>		"$ENV{HOME}/.searchengine-cookies.txt",
+	autosave =>	1
+);
+$ua->timeout(10);
+$ua->cookie_jar($cj);
+$ua->show_progress(1);
+
+foreach ($schema->resultset('Credential')->search({
+	realm =>	\' IS NOT NULL'
+}))
+{
+	my $uri = URI->new($_->url)->canonical;
+
+	$ua->credentials($uri->host . ':' . $uri->port, $_->realm, $_->userid, $_->password) if (defined($_->realm));
+}
+
+foreach ($schema->resultset('Credential')->search({
+	realm =>	\' IS NULL'
+}))
+{
+	my $uri = URI->new($_->url)->canonical;
+
+	# Gather some cookies
+	if (defined($_->userparm) && defined($_->passparm))
+	{
+		$ua->post($uri->as_string,
+			$_->userparm =>	$_->userid,
+			$_->passparm =>	$_->password
+		);
+	}
+}
+
+$cj->save();
 
 while (1)
 {

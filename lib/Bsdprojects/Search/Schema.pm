@@ -26,7 +26,7 @@ Base class for access to the BSD search engine database
 
 =cut
 
-__PACKAGE__->load_classes(qw/Website Keyword Siteword Linksto/);
+__PACKAGE__->load_classes(qw/Credential Website Keyword Siteword Linksto/);
 
 =had1 SEE ALSO
 
