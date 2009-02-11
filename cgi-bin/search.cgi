@@ -58,7 +58,7 @@ my $schema = Bsdprojects::Search::Schema->connect(
 my @iwords = split(/\s+/, lc($query));
 my @words;
 my @sites;
-my $offset = int(param('p'));
+my $offset = defined(param('p')) ? int(param('p')) : 0;
 my $npages = 0;
 my $nresults = 0;
 my @pages;
