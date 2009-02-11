@@ -230,7 +230,7 @@ sub index_site
 my $ua = new LWP::UserAgent;
 my $cj = HTTP::Cookies->new(
 	file =>		"$ENV{HOME}/.searchengine-cookies.txt",
-	autosave =>	1
+	ignore_discard => 1
 );
 $ua->timeout(10);
 $ua->cookie_jar($cj);
