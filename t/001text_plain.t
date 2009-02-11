@@ -5,7 +5,7 @@ use warnings;
 
 use Bsdprojects::Search::Filter;
 use Bsdprojects::Search::Filter::TextPlain;
-use Test::More tests => 2;
+use Test::More tests => 3;
 use IO::File;
 
 eval { no warnings; require Test::LongString; Test::LongString->import(max => 100); $Test::LongString::Context = 50; };
