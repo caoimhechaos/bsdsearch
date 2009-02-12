@@ -56,7 +56,7 @@ my $q = escapeHTML($query);
 my $schema = Bsdprojects::Search::Schema->connect(
 	"dbi:Pg:dbname=searchengine", "", "", {}
 ) or die('Unable to connect to database');
-my @iwords = split(/\s+/, lc($query));
+my @iwords = split(/\W+/, lc($query));
 my @words;
 my @sites;
 my $offset = defined(param('p')) ? int(param('p')) : 0;
