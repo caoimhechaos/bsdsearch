@@ -135,8 +135,11 @@
   </div>
   <div class="pager">
    Result pages:
+[% IF hasprev; %]
+   <a href="/search.cgi?q=[% encquery %]&p=[% page - 1 %]">&lt; Prev</a>
+[% END; %]
 [% IF page > 10; %]
-   ...
+   &hellip;
 [% END; %]
 [% FOREACH opage IN pages -%]
 [% IF opage == page; %]
@@ -148,7 +151,10 @@
 [% END; %]
 [% END -%]
 [% IF hasmore; %]
-   ...
+   &hellip;
+[% END; %]
+[% IF hasnext; %]
+   <a href="/search.cgi?q=[% encquery %]&p=[% page + 1 %]">Next &gt;</a>
 [% END; %]
   </div>
   <div class="content">

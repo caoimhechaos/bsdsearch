@@ -258,6 +258,7 @@ for ($i = ($offset - 10 <= 0 ? 0 : $offset - 10);
 print(header);
 $tt->process('search.html', {str => $q, results => \@results, page => $offset,
 	pages => \@pages, nresults => $nresults, encquery => $encquery,
+	hasnext => ($offset < $npages), hasprev => ($offset > 0),
 	hasmore => ($npages > $offset + 5), time => sprintf("%.02f", -$time),
 	showtime => sprintf("%.02f", $showtime), nsites => $nsites})
 	or die($tt->error());
