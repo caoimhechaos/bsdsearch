@@ -2,9 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
  <head>
 [% IF str; %]
-  <title>BSD projects search: [% str %]</title>
+  <title>SyGroup search: [% str %]</title>
 [% ELSE; %]
-  <title>BSD projects search</title>
+  <title>SyGroup search</title>
 [% END; %]
   <style type="text/css">
     html, body {
@@ -102,10 +102,9 @@
  <body>
   <div class="content">
 [% IF NOT str; %]
-   <img src="/images/bsdprojects-search-logo-small.png"
-	alt="BSD projects search engine" title="BSD projects search engine"/>
+   <img src="/sylogo.png" alt="SyGroup search engine" title="SyGroup search engine"/>
 [% END; %]
-   <form action="/search.cgi" method="get">
+   <form action="/cgi-bin/search.cgi" method="get">
     <div class="searchInputPanel">
      <input name="q" type="text" value="[% str %]"/>
     </div>
@@ -136,7 +135,7 @@
   <div class="pager">
    Result pages:
 [% IF hasprev; %]
-   <a href="/search.cgi?q=[% encquery %]&p=[% page - 1 %]">&lt; Prev</a>
+   <a href="/cgi-bin/search.cgi?q=[% encquery %]&p=[% page - 1 %]">&lt; Prev</a>
 [% END; %]
 [% IF page > 10; %]
    &hellip;
@@ -145,7 +144,7 @@
 [% IF opage == page; %]
    <b>
 [% END; %]
-   <a href="/search.cgi?q=[% encquery %]&p=[% opage %]">[% opage + 1 %]</a>
+   <a href="/cgi-bin/search.cgi?q=[% encquery %]&p=[% opage %]">[% opage + 1 %]</a>
 [% IF opage == page; %]
    </b>
 [% END; %]
@@ -154,11 +153,11 @@
    &hellip;
 [% END; %]
 [% IF hasnext; %]
-   <a href="/search.cgi?q=[% encquery %]&p=[% page + 1 %]">Next &gt;</a>
+   <a href="/cgi-bin/search.cgi?q=[% encquery %]&p=[% page + 1 %]">Next &gt;</a>
 [% END; %]
   </div>
   <div class="content">
-   <form action="/search.cgi" method="get">
+   <form action="/cgi-bin/search.cgi" method="get">
     <div class="searchInputPanel">
      <input name="q" type="text" value="[% str %]"/>
     </div>
