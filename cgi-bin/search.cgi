@@ -87,9 +87,11 @@ foreach my $iword (@iwords)
 
 if (@words)
 {
-	# Gather keywords
+	# Gather keywords. Sort them by lenght, descending, because shorter
+	# words are more likely to produce large result sets so we better
+	# only use them in filters.
 	my @keywords = $schema->resultset('Keyword')->search({
-		word => { -in => [@words]}
+		word => { -in => [sort { length($b) <=> length($a) } @words]}
 	})->get_column('id')->all;
 
 	if (@keywords)
