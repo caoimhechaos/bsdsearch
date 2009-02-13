@@ -114,7 +114,7 @@ if (@words)
 		# Now, gather the results
 		foreach my $res ($schema->resultset('Siteword')->search($conds,
 		{
-			select => [\'(COUNT(*) * SUM(ratio))^2 * AVG(authority) AS relevance',
+			select => [\'((COUNT(*) * SUM(ratio))^2 * AVG(authority)) / AVG(spamminess) AS relevance',
 				'id_site'],
 			join =>		[qw/website/],
 			order_by =>	'relevance desc',
